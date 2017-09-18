@@ -2,12 +2,17 @@
 
 <ng-template #gameRows>
   <div class="container">
-    <div *ngFor="let rowNum of rowNumbers">
-      rows will go here
+    <game-row *ngFor="let rowNum of rowNumbers"
+              [isCenter]="rowNum === 1"
+              [rowNumber]="rowNum">"
+    </game-row>
+    <div *ngIf="gameOver">
+      <button class="btn btn-default" (click)="restartGame()">Play Again!</button>
+      <button class="btn btn-default" (click)="backToMenu()">Back to Menu</button>
     </div>
   </div>
 </ng-template>
 
 <ng-template #gameMenu>
-  Menu will go here
+  <game-start-menu></game-start-menu>
 </ng-template>

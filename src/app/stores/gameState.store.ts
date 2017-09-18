@@ -5,16 +5,16 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Observable} from 'rxjs/Observable';
 class GameState {
 
-  gameType: number;
+  gameType: string;
   aiDiff: string;
   humanAs: string;
   computerAs: string;
   currentPlayer: string;
   inProgress: boolean;
-  rows: number[][];
+  rows: string[][];
 
   constructor() {
-    this.gameType = 1;
+    this.gameType = Constants.TWO_PLAYER;
     this.aiDiff = '';
     this.humanAs = Constants.NO_PLAYER;
     this.computerAs = Constants.NO_PLAYER;
@@ -23,7 +23,7 @@ class GameState {
     this.clearRows();
   }
 
-  init(gameType: number,  aiDiff: string,  humanAs: string): void {
+  init(gameType: string,  aiDiff: string,  humanAs: string): void {
     this.currentPlayer = Constants.PLAYER_X;
     this.gameType = gameType;
     this.aiDiff = aiDiff;
@@ -59,7 +59,7 @@ export class GameStateStore {
     this.gameState$ = new BehaviorSubject<GameState>(this.gameState);
   }
 
-  refreshState(gameType: number,  aiDiff: string,  humanAs: string): void {
+  refreshState(gameType: string,  aiDiff: string,  humanAs: string): void {
     this.gameState.init(gameType,  aiDiff, humanAs);
     this.updateGameState();
   }
@@ -78,7 +78,65 @@ export class GameStateStore {
     return this.gameState$.asObservable();
   }
 
+  getGameBoard(): string[][] {
+    return this.gameState.rows;
+  }
+
+  getCurrentPlayer(): string {
+    return this.gameState.currentPlayer;
+  }
+
+  getGameType(): string {
+    return this.gameState.gameType;
+  }
+
+  getHumanAs(): string {
+    return this.gameState.humanAs;
+  }
+
+  getComputerAs(): string {
+    return this.gameState.computerAs;
+  }
+
+  getAiDifficulty(): string {
+    return this.gameState.aiDiff;
+  }
+
+  getRows(): string[][] {
+    return this.gameState.rows;
+  }
+
+  getRow(rowIndex: number): string[] {
+    return this.gameState.rows[rowIndex];
+  }
+
   updateGameState(): void {
     this.gameState$.next(this.gameState);
+  }
+
+  updateGameBoard(rowIndex: number, colIndex: number): void {
+    this.gameState.rows[rowIndex][colIndex] = this.gameState.currentPlayer;
+    this.updateGameState();
+  }
+
+  updateNextPlayer(): void {
+    this.gameState.currentPlayer = this.gameState.currentPlayer === Constants.PLAYER_X ?
+                                    Constants.PLAYER_O : Constants.PLAYER_X;
+
+    this.updateGameState();
+  }
+
+  markGameAsOver(): void {
+    this.gameState.inProgress = false;
+    this.updateGameState();
+  }
+
+  isHumansTurn(): boolean {
+    return this.gameState.gameType === Constants.TWO_PLAYER ||
+           this.gameState.currentPlayer === this.gameState.humanAs;
+  }
+
+  isCellEmpty(rowIndex: number, colIndex: number): boolean {
+    return this.gameState.rows[rowIndex][colIndex] === Constants.NO_PLAYER;
   }
 }

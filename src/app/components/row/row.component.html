@@ -1,0 +1,7 @@
+<div [ngClass]="{'row': true, 'center-row': isCenter}">
+  <game-cell *ngFor="let colNum of colNumbers"
+             [isCenter]="colNum === 1"
+             [colNumber]="colNum"
+             [rowNumber]="rowNumber">
+  </game-cell>
+</div>

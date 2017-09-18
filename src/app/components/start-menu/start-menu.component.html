@@ -1,0 +1,36 @@
+<form (ngSubmit)="startGame()">
+  <div>How Many Players:<br/></div>
+  <div class="radio">
+    <label><input type="radio" [(ngModel)]="gameType" name="gameType" value="single_player">One Player</label>
+  </div>
+  <div class="radio">
+    <label><input type="radio" [(ngModel)]="gameType" name="gameType" value="two_player">Two Player</label>
+  </div>
+  <br/>
+  <div *ngIf="showAiMenu()">
+    <div class="container">
+      Select Computer Difficulty
+      <div class="radio">
+        <label><input type="radio" [(ngModel)]="aiDiff" name="aiDiff" value="easy">Easy</label>
+      </div>
+      <div class="radio">
+        <label><input type="radio" [(ngModel)]="aiDiff" name="aiDiff" value="hard">Hard</label>
+      </div>
+    </div>
+    <br/>
+    <div class="container">
+      Player 1 plays as
+      <div class="radio">
+        <label><input type="radio" [(ngModel)]="humanAs" name="humanAs" value="x">X</label>
+      </div>
+      <div class="radio">
+        <label><input type="radio" [(ngModel)]="humanAs" name="humanAs" value="o">O</label>
+      </div>
+      <div class="radio">
+        <label><input type="radio" [(ngModel)]="humanAs" name="humanAs" value="r">Random</label>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-primary" type="submit" [disabled]="disableButton()">Start Game</button>
+</form>
