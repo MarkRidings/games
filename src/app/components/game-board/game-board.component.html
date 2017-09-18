@@ -1,0 +1,13 @@
+<div *ngIf="gameInProgress;then gameRows else gameMenu"></div>
+
+<ng-template #gameRows>
+  <div class="container">
+    <div *ngFor="let rowNum of rowNumbers">
+      rows will go here
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #gameMenu>
+  Menu will go here
+</ng-template>
