@@ -1,10 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {Constants} from '../../app.constants';
 import {GameStateStore} from '../../stores/gameState.store';
+import {GameFunctionsService} from '../../services/gameFunctions.service';
 
 @Component({
   selector: 'game-board',
-  templateUrl: 'game-board.component.html'
+  templateUrl: 'game-board.component.html',
+  styleUrls: ['game-board.component.css']
 })
 
 
@@ -14,7 +16,7 @@ export class GameBoardComponent implements  OnInit {
   public gameInProgress = false;
   public gameOver = true;
 
-  constructor(private gamesStateStore: GameStateStore) {
+  constructor(private gamesStateStore: GameStateStore, private gameFunctionService: GameFunctionsService) {
     this.rowNumbers = Array.from(Array(Constants.NUM_ROWS).keys());
   }
 
@@ -26,7 +28,7 @@ export class GameBoardComponent implements  OnInit {
   }
 
   restartGame(): void {
-    this.gamesStateStore.restartGame();
+    this.gameFunctionService.restartGame();
   }
 
   backToMenu(): void {

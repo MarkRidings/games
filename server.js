@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const open = require('open');
 
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || (process.argv[2] || 5001);
 
 const app = express();
 
@@ -16,6 +16,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
+console.log('will be listening on ' + PORT);
 app.listen(PORT,  function (err) {
   if (err) {
     console.log('err');

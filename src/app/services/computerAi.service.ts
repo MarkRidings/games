@@ -16,6 +16,7 @@ export class ComputerAiService {
 
   makeHardMove(gameBoard: string[][]): [number, number] {
 
+    console.log('in make hard move');
     // always go center if available
     if (gameBoard[1][1] === Constants.NO_PLAYER) {
       return [1, 1];
@@ -42,7 +43,9 @@ export class ComputerAiService {
 
     if (numMoves === 3) {
       const oLocation = this.oFindLocation(gameBoard);
-      return [oLocation[0], 2 - oLocation[1]];
+      if (gameBoard[oLocation[0]][2 - oLocation[1]] === Constants.NO_PLAYER) {
+        return [oLocation[0], 2 - oLocation[1]];
+      }
     }
 
     return this.randomMove(gameBoard);

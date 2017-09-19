@@ -36,6 +36,7 @@ class GameState {
       this.humanAs = humanAs;
     }
 
+    this.computerAs = this.humanAs === Constants.PLAYER_X ? Constants.PLAYER_O : Constants.PLAYER_X;
     this.clearRows();
     this.inProgress = true;
   }

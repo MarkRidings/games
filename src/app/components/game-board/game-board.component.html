@@ -1,3 +1,15 @@
+
+<div class="jumbotron">
+  <h2>Welcome to Isabel and Emily's Games!</h2>
+</div>
+<div *ngIf="!gameInProgress">
+  Right now there is only tic-tac-toe. Would you like to play a game of tic-tac-toe?
+</div>
+<div *ngIf="gameInProgress" class="tic-tac-toe">
+  <h2>TIC-TAC-TOE</h2>
+</div>
+<hr/>
+
 <div *ngIf="gameInProgress;then gameRows else gameMenu"></div>
 
 <ng-template #gameRows>

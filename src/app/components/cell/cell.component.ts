@@ -18,7 +18,7 @@ export class CellComponent implements OnInit {
 
   gameStateSubscription: Subscription;
 
-  private cellValue = '';
+  public cellValue = '';
 
   constructor(private gameFunctionsService: GameFunctionsService, private gameStateStore: GameStateStore) {}
 

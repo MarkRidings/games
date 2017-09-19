@@ -8,13 +8,18 @@ export class GameFunctionsService {
 
   constructor(private aiService: ComputerAiService, private gameStateStore: GameStateStore) { }
 
-  newGame(): void {
-    this.gameStateStore.refreshState(Constants.SINGLE_PLAYER, '', Constants.NO_PLAYER);
-  }
 
   startGame(gameType: string, aiDiff: string, humanAs: string): void {
 
     this.gameStateStore.refreshState(gameType, aiDiff, humanAs);
+    if (this.gameStateStore.getGameType() === Constants.SINGLE_PLAYER && this.gameStateStore.getHumanAs() === Constants.PLAYER_O) {
+      this.makeAiMove();
+    }
+  }
+
+  restartGame(): void {
+
+    this.gameStateStore.restartGame();
     if (this.gameStateStore.getGameType() === Constants.SINGLE_PLAYER && this.gameStateStore.getHumanAs() === Constants.PLAYER_O) {
       this.makeAiMove();
     }
@@ -26,8 +31,11 @@ export class GameFunctionsService {
       this.gameStateStore.updateGameBoard(rowNumber, colNumber);
 
       if (this.checkForWinner()) {
+        this.announceWinner();
+      }
+      else if (this.checkForTie()) {
+        setTimeout(this.announceTie, 200);
         this.gameStateStore.markGameAsOver();
-        alert(`Winner: ${this.gameStateStore.getCurrentPlayer()}`);
       }
       else {
         this.gameStateStore.updateNextPlayer();
@@ -44,7 +52,7 @@ export class GameFunctionsService {
       this.aiService.makeHardMove(this.gameStateStore.getGameBoard());
 
     if (aiMove[0] === -1) {
-      setTimeout(this.announceTie, 500);
+      setTimeout(this.announceTie, 150);
       this.gameStateStore.markGameAsOver();
       return;
     }
@@ -56,13 +64,13 @@ export class GameFunctionsService {
         this.gameStateStore.updateNextPlayer();
       }
       else {
+        setTimeout(this.announceTie, 150);
         this.gameStateStore.markGameAsOver();
-        setTimeout(this.announceTie(), 500);
       }
     }
     else {
+      this.announceWinner();
       this.gameStateStore.markGameAsOver();
-      alert(`Winner: ${this.gameStateStore.getComputerAs()}`);
     }
   }
 
@@ -70,12 +78,26 @@ export class GameFunctionsService {
     alert('Tie Game');
   }
 
+  announceWinner(): void {
+    const message = `Winner: Player ${this.gameStateStore.getCurrentPlayer()}`;
+    setTimeout(function () {
+      alert(message);
+    }, 150);
+
+    this.gameStateStore.markGameAsOver();
+  }
+
   checkForWinner(): boolean {
     return this.checkRows() || this.checkCols() || this.checkDiags();
   }
 
   checkForTie(): boolean {
-    return false;
+    let cnt = 0;
+    for (let i = 0; i < Constants.NUM_ROWS; i++) {
+      cnt += this.gameStateStore.getRow(i).filter(x => x === Constants.NO_PLAYER).length;
+    }
+
+    return cnt === 0;
   }
 
   checkRows(): boolean {
