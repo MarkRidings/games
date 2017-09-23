@@ -1,1 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  background-color: DeepSkyBlue;
+  color: white;
+  font-size: 1.65em;
+  font-weight: bold;
+  text-shadow:
+    -1px -1px gray,
+    1px -1px gray,
+    -1px  1px gray,
+    1px  1px gray;
+}
+
+.btn {
+  background-color: green;
+  color: white;
+  font-size: 1.33em;
+  font-weight: bold;
+  text-shadow:
+    -1px -1px black,
+     1px -1px black,
+    -1px  1px black,
+     1px  1px black;
+  border-radius: 10px;
+}

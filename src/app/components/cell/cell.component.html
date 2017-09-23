@@ -1,5 +1,6 @@
 <div (click)="handleClick()"
      [ngClass]="{'col-md-4': true, 'cell': true, 'center-cell': isCenter}">
-  {{cellValue}}
+  <span *ngIf="cellValue === 'X'" class="glyphicon glyphicon-heart heart"></span>
+  <span *ngIf="cellValue === 'O'" class="glyphicon glyphicon-star star"></span>
 </div>
 

@@ -1,7 +1,7 @@
 .cell {
   margin: auto;
   padding: 10px;
-  background-color: white;
+  background-color: lightskyblue;
   min-width: 15vw;
   min-height: 20vh;
   text-align: center;
@@ -11,4 +11,12 @@
 .center-cell {
   border-right: 5px solid black;
   border-left: 5px solid black;
+}
+
+.heart {
+  color: hotpink;
+}
+
+.star {
+  color: purple;
 }
