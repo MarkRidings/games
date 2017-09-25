@@ -10,6 +10,7 @@ export class Constants {
   static readonly SINGLE_PLAYER = 'single_player';
   static readonly TWO_PLAYER = 'two_player';
   static readonly AI_EASY = 'easy';
+  static readonly AI_MEDIUM = 'medium';
   static readonly AI_HARD = 'hard';
 
 }

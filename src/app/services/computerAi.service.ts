@@ -5,6 +5,10 @@ import {Constants} from '../app.constants';
 export class ComputerAiService {
 
   makeEasyMove(gameBoard: string[][]): [number, number] {
+    return this.randomMove(gameBoard);
+  }
+
+  makeMediumMove(gameBoard: string[][]): [number, number] {
     const potWinner = this.checkPotentialWinner(gameBoard);
 
     if (potWinner[0] !== -1) {
@@ -16,7 +20,6 @@ export class ComputerAiService {
 
   makeHardMove(gameBoard: string[][]): [number, number] {
 
-    console.log('in make hard move');
     // always go center if available
     if (gameBoard[1][1] === Constants.NO_PLAYER) {
       return [1, 1];

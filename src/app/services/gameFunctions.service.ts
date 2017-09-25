@@ -46,10 +46,21 @@ export class GameFunctionsService {
     }
   }
 
+  getAiMove(): [number, number] {
+    switch (this.gameStateStore.getAiDifficulty()) {
+      case Constants.AI_EASY:
+        return this.aiService.makeEasyMove(this.gameStateStore.getGameBoard());
+
+      case Constants.AI_MEDIUM:
+        return this.aiService.makeMediumMove(this.gameStateStore.getGameBoard());
+
+      case Constants.AI_HARD:
+        return this.aiService.makeHardMove(this.gameStateStore.getGameBoard());
+    }
+  }
+
   makeAiMove(): void {
-    const aiMove = (this.gameStateStore.getAiDifficulty() === Constants.AI_EASY) ?
-      this.aiService.makeEasyMove(this.gameStateStore.getGameBoard()) :
-      this.aiService.makeHardMove(this.gameStateStore.getGameBoard());
+    const aiMove = this.getAiMove();
 
     if (aiMove[0] === -1) {
       setTimeout(this.announceTie, 150);
